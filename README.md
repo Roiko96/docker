@@ -3,7 +3,7 @@ docker proj
 
 
 ```
-sudo apt install docker.oi -y
+sudo apt install docker -y
 docker --version
 git clone https://github.com/Roiko96/docker.git
 cd docker
