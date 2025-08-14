@@ -11,8 +11,8 @@ sudo systemctl enable docker
 sudo systemctl start docker
 sudo docker build -t gamescoreboard-app .
 sudo docker run -it gamescoreboard-app
-docker ps -a
-docker images
+sudo docker ps -a
+sudo docker images
 ```
 
 ***enjoy***
