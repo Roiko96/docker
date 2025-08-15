@@ -2,10 +2,13 @@ FROM python:3.12-slim
 
 WORKDIR /app
 
-# העתקה של הקבצים המקומיים
-COPY . .
+COPY requirements.txt .
 
-# התקנה מקומית (בלי חיבור ל־PyPI)
-RUN pip install --no-cache-dir flask
+# התקנה דרך מראה מהיר
+RUN pip install --no-cache-dir -r requirements.txt \
+    --index-url https://pypi.org/simple \
+    --timeout=100
+
+COPY . .
 
 CMD ["python", "app.py"]
