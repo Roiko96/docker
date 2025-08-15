@@ -1,14 +1,21 @@
 FROM python:3.12-slim
 
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
 WORKDIR /app
 
+# התקנת תלויות
 COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# התקנה דרך מראה מהיר
-RUN pip install --no-cache-dir -r requirements.txt \
-    --index-url https://mirrors.aliyun.com/pypi/simple \
-    --timeout=100
-
+# קבצי הפרויקט
 COPY . .
+RUN chmod +x entrypoint.sh
 
-CMD ["python", "app.py"]
+# פורט ה-Web
+EXPOSE 5000
+
+# כניסה מאוחדת — ברירת מחדל CLI (תואם למה שעבד לך)
+ENTRYPOINT ["./entrypoint.sh"]
+CMD ["cli"]
