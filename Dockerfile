@@ -6,7 +6,7 @@ COPY requirements.txt .
 
 # התקנה דרך מראה מהיר
 RUN pip install --no-cache-dir -r requirements.txt \
-    --index-url https://pypi.org/simple \
+    --index-url https://mirrors.aliyun.com/pypi/simple \
     --timeout=100
 
 COPY . .
