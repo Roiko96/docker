@@ -14,5 +14,11 @@ sudo docker run -it gamescoreboard-app
 sudo docker ps -a
 sudo docker images
 ```
+run with index on local host via port 5000 : 
+```
+sudo docker build -t gamescoreboard-app .
+sudo docker run -p 5000:5000 gamescoreboard-app
+```
+URL : http://localhost:5000
 
 ***enjoy***
