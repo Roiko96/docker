@@ -1,5 +1,5 @@
 # local docker - game score board 
-docker proj 
+it will run on your terminal.. to check if all the func are work properly
 
 
 ```
