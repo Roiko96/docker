@@ -1,14 +1,11 @@
 FROM python:3.12-slim
 
-# תיקייה לעבודה
 WORKDIR /app
 
-# התקנת Flask
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-# העתקת הקוד
+# העתקה של הקבצים המקומיים
 COPY . .
 
-# הפעלת האפליקציה
+# התקנה מקומית (בלי חיבור ל־PyPI)
+RUN pip install --no-cache-dir flask
+
 CMD ["python", "app.py"]
