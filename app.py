@@ -1,28 +1,29 @@
 from flask import Flask, render_template, request, redirect, url_for
 import socket, time
-from functions import scores  # משתמשים באותה רשימה מה-CLI
 
 app = Flask(__name__)
+
+# אחסון זמני בזיכרון (דמו)
+scores = []  # כל רשומה: {"name": str, "game": str, "score": float}
 
 def calc_average():
     if not scores:
         return None
     return round(sum(s["score"] for s in scores) / len(scores), 2)
 
-@app.route("/")
+@app.get("/")
 def index():
     avg = calc_average() if request.args.get("average") else None
     now_ms = int(time.time() * 1000)
     host = socket.gethostname()
     return render_template("index.html", scores=scores, average=avg, host=host, now_ms=now_ms)
 
-@app.route("/sort/<key>")
+@app.get("/sort/<key>")
 def sort_view(key):
     key = key.lower()
-    reverse = key == "score"
+    reverse = (key == "score")
     if key not in {"name", "game", "score"}:
-        key = "name"
-        reverse = False
+        key, reverse = "name", False
     sorted_list = sorted(scores, key=lambda x: x[key], reverse=reverse)
     avg = calc_average() if request.args.get("average") else None
     now_ms = int(time.time() * 1000)
@@ -33,7 +34,11 @@ def sort_view(key):
 def add():
     name = request.form.get("name","").strip()
     game = request.form.get("game","").strip()
-    score = float(request.form.get("score","0"))
+    score_s = request.form.get("score","").strip()
+    try:
+        score = float(score_s)
+    except ValueError:
+        score = 0.0
     scores.append({"name": name, "game": game, "score": score})
     return redirect(url_for("index"))
 
@@ -71,5 +76,5 @@ def edit():
     return redirect(url_for("index"))
 
 if __name__ == "__main__":
-    # חשוב: 0.0.0.0 כדי שהשירות יהיה נגיש מחוץ לקונטיינר
+    # 0.0.0.0 כדי שיהיה נגיש מהמארח כשעושים -p 5000:5000
     app.run(host="0.0.0.0", port=5000)
