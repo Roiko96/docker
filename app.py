@@ -3,8 +3,8 @@ import socket, time
 
 app = Flask(__name__)
 
-# אחסון זמני בזיכרון (דמו)
-scores = []  # כל רשומה: {"name": str, "game": str, "score": float}
+
+scores = []  
 
 def calc_average():
     if not scores:
@@ -76,5 +76,5 @@ def edit():
     return redirect(url_for("index"))
 
 if __name__ == "__main__":
-    # 0.0.0.0 כדי שיהיה נגיש מהמארח כשעושים -p 5000:5000
+  
     app.run(host="0.0.0.0", port=5000)
